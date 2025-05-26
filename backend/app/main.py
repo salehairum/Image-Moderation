@@ -2,8 +2,11 @@ from fastapi import FastAPI, Depends, HTTPException, Header
 from app.db import tokens_collection
 from app.models import Token
 from datetime import datetime
+from app.routes import auth
 
 app = FastAPI()
+
+app.include_router(auth.router)
 
 async def get_token(authorization: str = Header(...)):
     if not authorization.startswith("Bearer "):

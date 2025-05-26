@@ -5,4 +5,4 @@ client = AsyncIOMotorClient(settings.MONGO_URI)
 db = client[settings.DB_NAME]
 
 tokens_collection = db.tokens
-# usages_collection = db.usages
+usages_collection = db.usages
