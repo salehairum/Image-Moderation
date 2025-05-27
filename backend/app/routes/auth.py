@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Request
 from app.db import tokens_collection
-from app.models import Token, TokenCreate
+from app.models import Token, TokenRequest
 from app.dependencies import get_current_admin_token
 from app.dependencies import log_usage
 from typing import List
@@ -17,7 +17,7 @@ async def get_tokens(admin_token=Depends(get_current_admin_token)):
     return tokens
 
 @router.post("/tokens", response_model=Token, status_code=status.HTTP_201_CREATED)
-async def add_token(token_data: TokenCreate, admin_token=Depends(get_current_admin_token)):
+async def add_token(token_data: TokenRequest, admin_token=Depends(get_current_admin_token)):
     await log_usage(admin_token, "/auth/tokens")    
     
     existing = await tokens_collection.find_one({"token": token_data.token})

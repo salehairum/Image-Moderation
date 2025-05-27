@@ -7,6 +7,6 @@ class Token(BaseModel):
     createdAt: datetime
 
 #this model is for creating a new token as date is not passed
-class TokenCreate(BaseModel):
+class TokenRequest(BaseModel):
     token: str 
     isAdmin: bool = False
