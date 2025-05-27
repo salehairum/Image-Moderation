@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Image Moderation</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="moderate.css">
+    <link rel="stylesheet" href="table.css">
+</head>
+
+<body>
+    <h1>Upload Image for Moderation</h1>
+    <input type="file" id="fileInput" accept="image/*" />
+    <button class="upload-button">Upload</button>
+
+    <div id="results" hidden>
+        <h2>Moderation Results</h2>
+        <table id="resultTable" border="1" style="border-collapse: collapse; width: 100%;">
+            <thead>
+                <tr>
+                    <th>Label</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody id="resultBody"></tbody>
+        </table>
+    </div>
+
+    <div id="loading" style="display: none; text-align: center; margin-top: 20px;">
+        <strong>Loading...</strong>
+    </div>
+
+    <script src="moderate.js"></script>
+</body>
+
+</html>

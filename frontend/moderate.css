@@ -1,0 +1,14 @@
+#results {
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    max-width: 500px;
+}
+
+label,
+input[type="file"] {
+    display: block;
+    margin: 1rem 0;
+}
