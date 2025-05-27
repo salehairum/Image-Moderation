@@ -1,12 +1,16 @@
+# uvicorn app.main:app --reload --port 7000
+
 from fastapi import FastAPI, Depends, HTTPException, Header
 from app.db import tokens_collection
 from app.models import Token
 from datetime import datetime
 from app.routes import auth
+from app.routes import login
 
 app = FastAPI()
 
 app.include_router(auth.router)
+app.include_router(login.router)
 
 async def get_token(authorization: str = Header(...)):
     if not authorization.startswith("Bearer "):
