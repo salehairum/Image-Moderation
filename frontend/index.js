@@ -38,7 +38,7 @@ async function joinAs(role) {
         sessionStorage.setItem("authToken", token);
 
         if (role === 'user') {
-            location.href = 'user.html';
+            location.href = 'moderate.html';
         } else if (role === 'admin') {
             location.href = 'admin.html';
         }

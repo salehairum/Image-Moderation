@@ -157,3 +157,13 @@ document.getElementById('deleteTokenForm').addEventListener('submit', async (e) 
         console.error(err);
     }
 });
+
+//go to moderate image
+document.querySelector('.moderate-button').addEventListener('click', () => {
+    const token = sessionStorage.getItem("authToken");
+    if (!token) {
+        document.getElementById('errorMsg').textContent = "Please login first.";
+        return;
+    }
+    location.href = 'moderate.html';
+});
