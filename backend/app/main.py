@@ -6,6 +6,7 @@ from app.models import Token
 from datetime import datetime
 from app.routes import auth
 from app.routes import login
+from app.routes import moderate
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -20,6 +21,7 @@ app.add_middleware(
 
 app.include_router(auth.router)
 app.include_router(login.router)
+app.include_router(moderate.router)
 
 async def get_token(authorization: str = Header(...)):
     if not authorization.startswith("Bearer "):
