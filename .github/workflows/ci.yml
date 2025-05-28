@@ -2,7 +2,7 @@ name: Code Quality CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, linting]
   workflow_dispatch:
 
 jobs:
