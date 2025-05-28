@@ -1,8 +1,10 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException
 from app.models import TokenRequest
 from app.db import tokens_collection
 
+
 router = APIRouter(prefix="/login", tags=["login"])
+
 
 @router.post("/verify-token")
 async def verify_token(data: TokenRequest):

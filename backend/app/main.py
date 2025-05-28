@@ -2,8 +2,6 @@
 
 from fastapi import FastAPI, Depends, HTTPException, Header
 from app.db import tokens_collection
-from app.models import Token
-from datetime import datetime
 from app.routes import auth
 from app.routes import login
 from app.routes import moderate
@@ -23,6 +21,7 @@ app.include_router(auth.router)
 app.include_router(login.router)
 app.include_router(moderate.router)
 
+
 async def get_token(authorization: str = Header(...)):
     if not authorization.startswith("Bearer "):
         raise HTTPException(status_code=401, detail="Invalid token format")
@@ -32,6 +31,7 @@ async def get_token(authorization: str = Header(...)):
         raise HTTPException(status_code=403, detail="Invalid or missing token")
     return token_doc
 
+
 @app.get("/test")
-async def ping(token = Depends(get_token)):
+async def ping(token=Depends(get_token)):
     return {"msg": "Testing if admin connects!", "admin": token["isAdmin"]}

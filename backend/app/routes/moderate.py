@@ -5,14 +5,23 @@ from app.dependencies import log_usage
 from app.dependencies import get_current_token
 import random
 
+
 router = APIRouter(tags=["moderate"])
 
-labels = ["explicit nudity", "graphic violence", "hate symbol", "self-harm", "extremist propaganda", "safe content"]
+labels = [
+    "explicit nudity",
+    "graphic violence",
+    "hate symbol",
+    "self-harm",
+    "extremist propaganda",
+    "safe content",
+]
+
 
 @router.post("/moderate")
 async def moderate_image(
     image: UploadFile = File(...),
-    token: str = Depends(get_current_token)
+    token: str = Depends(get_current_token),
 ):
     await log_usage(token, "/moderate")
 
@@ -24,18 +33,10 @@ async def moderate_image(
     normalized_scores = [round(score / total, 3) for score in random_scores]
 
     results = dict(zip(labels, normalized_scores))
-    
+
     response = {
         "scores": results,
-        "timestamp": datetime.now(timezone.utc).isoformat()
+        "timestamp": datetime.now(timezone.utc).isoformat(),
     }
-    # fake_response = {
-    #     "safeSearch": {
-    #         "adult": "UNKNOWN",
-    #         "violence": "UNKNOWN",
-    #         "racy": "UNKNOWN"
-    #     },
-    #     "timestamp": datetime.now(timezone.utc).isoformat()
-    # }
 
     return JSONResponse(content=response, status_code=200)
