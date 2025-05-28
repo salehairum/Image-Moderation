@@ -6,8 +6,7 @@ from datetime import datetime, timezone
 async def get_current_token(authorization: str = Header(...)):
     if not authorization.startswith("Bearer "):
         raise HTTPException(
-            status_code=401, detail="Invalid authorization header"
-        )
+            status_code=401, detail="Invalid authorization header")
 
     token_value = authorization.split(" ")[1]
     token_doc = await tokens_collection.find_one({"token": token_value})
@@ -18,16 +17,14 @@ async def get_current_token(authorization: str = Header(...)):
 async def get_current_admin_token(authorization: str = Header(...)):
     if not authorization.startswith("Bearer "):
         raise HTTPException(
-            status_code=401, detail="Invalid authorization header"
-        )
+            status_code=401, detail="Invalid authorization header")
 
     token_value = authorization.split(" ")[1]
     token_doc = await tokens_collection.find_one({"token": token_value})
 
     if not token_doc or not token_doc.get("isAdmin", False):
         raise HTTPException(
-            status_code=403, detail="Admin privileges required"
-        )
+            status_code=403, detail="Admin privileges required")
 
     return token_doc
 

@@ -24,8 +24,9 @@ async def get_tokens(admin_token=Depends(get_current_admin_token)):
     response_model=Token,
     status_code=status.HTTP_201_CREATED,
 )
-async def add_token(token_data: TokenRequest,
-                    admin_token=Depends(get_current_admin_token)):
+async def add_token(
+    token_data: TokenRequest, admin_token=Depends(get_current_admin_token)
+):
     await log_usage(admin_token, "/auth/tokens")
 
     existing = await tokens_collection.find_one({"token": token_data.token})
@@ -42,7 +43,10 @@ async def add_token(token_data: TokenRequest,
 
 
 @router.delete("/tokens/{token}", status_code=204)
-async def delete_token(token: str, admin_token=Depends(get_current_admin_token)):
+async def delete_token(
+    token: str,
+    admin_token=Depends(get_current_admin_token),
+):
     await log_usage(admin_token, "/auth/tokens")
 
     result = await tokens_collection.delete_one({"token": token})
