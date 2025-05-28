@@ -11,10 +11,21 @@ git clone https://github.com/salehairum/Image-Moderation.git
 ### Build
 In root folder, run the following command for the app to run:
 ```sh
-docker compose --build
+docker compose build --no-cache
 ```
 By default,
 - the frontend runs on port 3000
 - the backend runs on port 80
 - mongodb runs on port 27017
+To change the frontend or backend port, go to compose.yml->service name->ports->change the first port to desired port.
+Remember to change that port in .env file as well, where the urls have been listed.
+
 ### Run
+The following command runs compose.yml:
+```sh
+docker compose up -d
+```
+to stop:
+```sh
+docker compose down
+```
