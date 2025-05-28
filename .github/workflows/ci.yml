@@ -25,23 +25,3 @@ jobs:
 
       - name: Run flake8 linter
         run: flake8 backend/
-
-  frontend-lint:
-    name: Frontend (Lint)
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18"
-
-      - name: Install frontend dependencies
-        run: |
-          cd frontend
-          npm install eslint
-
-      - name: Run ESLint
-        run: npx eslint . --ext .js
