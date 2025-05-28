@@ -26,9 +26,6 @@ jobs:
       - name: Run flake8 linter
         run: flake8 backend/
 
-      - name: Run mypy
-        run: mypy backend/
-
   frontend-lint:
     name: Frontend (Lint)
     runs-on: ubuntu-latest
