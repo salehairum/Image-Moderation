@@ -33,6 +33,8 @@ async def moderate_image(
 
     results = dict(zip(labels, normalized_scores))
 
-    response = {"scores": results, "timestamp": datetime.now(timezone.utc).isoformat()}
+    response = {
+        "scores": results, 
+        "timestamp": datetime.now(timezone.utc).isoformat()}
 
     return JSONResponse(content=response, status_code=200)
