@@ -1,0 +1,50 @@
+name: Code Quality CI
+
+on:
+  # push:
+  #   branches: [main]
+  workflow_dispatch:
+
+jobs:
+  backend-lint-and-typecheck:
+    name: Backend (Lint + Type Check)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install -r backend/requirements.txt
+          pip install mypy flake8
+
+      - name: Run flake8 linter
+        run: flake8 backend/
+
+      - name: Run mypy
+        run: mypy backend/
+
+  frontend-lint:
+    name: Frontend (Lint)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install frontend dependencies
+        run: |
+          cd frontend
+          npm install eslint
+
+      - name: Run ESLint
+        run: npx eslint . --ext .js

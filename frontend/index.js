@@ -1,3 +1,5 @@
+const BASE_URL = window.API_BASE_URL;
+
 const join_buttons = document.querySelectorAll('.join-button');
 join_buttons.forEach(button => {
     button.addEventListener('click', function () {
@@ -11,13 +13,15 @@ async function joinAs(role) {
     const errorDiv = document.getElementById('errorMsg');
     errorDiv.textContent = "";
 
+    console.log('API_BASE_URL:', window.API_BASE_URL);
+
     if (!token) {
         errorDiv.textContent = "Please enter a token before proceeding.";
-        return;
+        return; 
     }
 
     try {
-        const response = await fetch('http://localhost:7000/login/verify-token', {
+        const response = await fetch(BASE_URL + '/login/verify-token', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
