@@ -1,39 +1,38 @@
-from fastapi import Header, HTTPException
-from app.db import tokens_collection, usages_collection
+from fastapi import APIRouter, File, UploadFile, HTTPException, Depends
+from fastapi.responses import JSONResponse
 from datetime import datetime, timezone
+from app.dependencies import log_usage
+from app.dependencies import get_current_token
+import random
 
 
-async def get_current_token(authorization: str = Header(...)):
-    if not authorization.startswith("Bearer "):
-        raise HTTPException(
-            status_code=401, detail="Invalid authorization header")
+router = APIRouter(prefix="/moderate", tags=["moderate"])
 
-    token_value = authorization.split(" ")[1]
-    token_doc = await tokens_collection.find_one({"token": token_value})
-
-    return token_doc
-
-
-async def get_current_admin_token(authorization: str = Header(...)):
-    if not authorization.startswith("Bearer "):
-        raise HTTPException(
-            status_code=401, detail="Invalid authorization header")
-
-    token_value = authorization.split(" ")[1]
-    token_doc = await tokens_collection.find_one({"token": token_value})
-
-    if not token_doc or not token_doc.get("isAdmin", False):
-        raise HTTPException(
-            status_code=403, detail="Admin privileges required")
-
-    return token_doc
+labels = [
+    "explicit nudity",
+    "graphic violence",
+    "hate symbol",
+    "self-harm",
+    "extremist propaganda",
+    "safe content",
+]
 
 
-async def log_usage(token: str, endpoint: str):
-    await usages_collection.insert_one(
-        {
-            "token": token,
-            "endpoint": endpoint,
-            "timestamp": datetime.now(timezone.utc),
-        }
-    )
+@router.post("/")
+async def moderate_image(
+    image: UploadFile = File(...), token: str = Depends(get_current_token)
+):
+    await log_usage(token, "/moderate")
+
+    if not image.content_type.startswith("image/"):
+        raise HTTPException(status_code=400, detail="File is not an image.")
+
+    random_scores = [random.uniform(0, 1) for _ in labels]
+    total = sum(random_scores)
+    normalized_scores = [round(score / total, 3) for score in random_scores]
+
+    results = dict(zip(labels, normalized_scores))
+
+    response = {"scores": results, "timestamp": datetime.now(timezone.utc).isoformat()}
+
+    return JSONResponse(content=response, status_code=200)
