@@ -35,3 +35,5 @@ to stop:
 docker compose down
 ```
 Visit localhost:7000 (or whatever port you have set) and the app will be running there!
+
+Note: The purpose of this task was to check backend engineering and devOps related skills, so the image moderation API is just a dummy moderator.
