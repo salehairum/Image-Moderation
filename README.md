@@ -17,8 +17,11 @@ By default,
 - the frontend runs on port 3000
 - the backend runs on port 80
 - mongodb runs on port 27017
-To change the frontend or backend port, go to compose.yml->service name->ports->change the first port to desired port.
-Remember to change that port in .env file as well, where the urls have been listed.
+To change the frontend or backend port, go to:
+
+compose.yml->service name->ports->change the first port to desired port
+
+Remember to change that port in .env file as well, where the urls have been listed!
 
 ### Run
 The following command runs compose.yml:
@@ -29,3 +32,4 @@ to stop:
 ```sh
 docker compose down
 ```
+Visit localhost:7000 (or whatever port you have set) and the app will be running there!
