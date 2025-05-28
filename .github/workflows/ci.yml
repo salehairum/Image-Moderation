@@ -21,10 +21,10 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r backend/requirements.txt
-          pip install mypy ruff
+          pip install mypy flake8
 
-      - name: Run ruff linter
-        run: ruff backend/
+      - name: Run flake8 linter
+        run: flake8 backend/
 
       - name: Run mypy
         run: mypy backend/
