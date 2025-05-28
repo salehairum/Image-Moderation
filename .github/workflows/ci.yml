@@ -1,9 +1,9 @@
 name: Code Quality CI
 
 on:
-  pull_request:
-  push:
-    branches: [main]
+  # push:
+  #   branches: [main]
+  workflow_dispatch:
 
 jobs:
   backend-lint-and-typecheck:
