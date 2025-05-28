@@ -17,6 +17,7 @@ By default,
 - the frontend runs on port 3000
 - the backend runs on port 7000
 - mongodb runs on port 27017
+
 To change the db port, go to .env file and modify it there.
 
 To change the frontend or backend port, go to:
