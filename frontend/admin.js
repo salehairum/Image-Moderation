@@ -1,3 +1,5 @@
+const BASE_URL = window.API_BASE_URL;
+
 async function loadTokens() {
     const token = sessionStorage.getItem("authToken");
     const errorDiv = document.getElementById("errorMsg");
@@ -8,7 +10,7 @@ async function loadTokens() {
     }
 
     try {
-        const response = await fetch("http://localhost:7000/auth/tokens", {
+        const response = await fetch(BASE_URL + "/auth/tokens", {
             headers: {
                 "Authorization": "Bearer " + token
             }
@@ -80,7 +82,7 @@ document.getElementById('addTokenForm').addEventListener('submit', async (e) => 
 
     try {
         const authToken = sessionStorage.getItem('authToken');
-        const response = await fetch('http://localhost:7000/auth/tokens', {
+        const response = await fetch(BASE_URL + "/auth/tokens", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -136,7 +138,7 @@ document.getElementById('deleteTokenForm').addEventListener('submit', async (e) 
 
     try {
         const authToken = sessionStorage.getItem('authToken');
-        const response = await fetch(`http://localhost:7000/auth/tokens/${token}`, {
+        const response = await fetch(BASE_URL+`/auth/tokens/${token}`, {
             method: "DELETE",
             headers: {
                 'Authorization': 'Bearer ' + authToken

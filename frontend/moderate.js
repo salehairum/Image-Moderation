@@ -1,3 +1,5 @@
+const BASE_URL = window.API_BASE_URL;
+
 const uploadButton = document.querySelector(".upload-button");
 uploadButton.addEventListener("click", uploadImage);
 
@@ -18,7 +20,7 @@ async function uploadImage() {
 
     try {
         const token = sessionStorage.getItem("authToken");
-        const response = await fetch("http://localhost:7000/moderate", {
+        const response = await fetch(BASE_URL + '/moderate', {
             method: "POST",
             headers: {
                 "Authorization": "Bearer " + token

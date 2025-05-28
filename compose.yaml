@@ -1,0 +1,26 @@
+services:
+  mongo:
+    image: mongo:6.0
+    container_name: mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+  backend:
+    build: ./backend
+    ports:
+      - "7000:7000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017
+      - DB_NAME=image_moderation
+    depends_on:
+      - mongo
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+
+volumes:
+  mongo_data:
